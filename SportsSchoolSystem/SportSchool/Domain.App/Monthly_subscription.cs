@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.App.Identity;
 
 
 namespace Domain;
@@ -15,7 +16,8 @@ public class Monthly_subscription
     
     public DateTime Date { get; set; } = default!;
     
-    public ICollection<User>? User { get; set; }
+    
+    public ICollection<AppUser>? AppUsers { get; set; }
     
     public int Sports_school_id { get; set; }
     public Sports_school? Sports_school { get; set; }

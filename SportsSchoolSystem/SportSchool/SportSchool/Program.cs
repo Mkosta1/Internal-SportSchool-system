@@ -1,6 +1,7 @@
-using DAL;
+ using DAL;
 using DAL.EF.APP;
-using Microsoft.AspNetCore.Identity;
+ using Domain.App.Identity;
+ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services
+    .AddIdentity<AppUser, AppRole>(
+        options => options.SignIn.RequireConfirmedAccount = false
+        )
+    .AddDefaultTokenProviders()
+    .AddDefaultUI()
+    //.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 

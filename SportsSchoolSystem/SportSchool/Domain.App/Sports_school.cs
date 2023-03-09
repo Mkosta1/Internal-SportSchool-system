@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.App.Identity;
 
 namespace Domain;
 
@@ -18,10 +19,10 @@ public class Sports_school
     [MinLength(1)]
     [MaxLength(128)]
     public string Email { get; set; } = default!;
-    
-    public ICollection<User>? User { get; set; }
-    
+
     public ICollection<Training>? Training { get; set; }
+    
+    public ICollection<AppUser>? AppUsers { get; set; }
     
     public ICollection<Monthly_subscription>? MonthlySubscriptions { get; set; }
     

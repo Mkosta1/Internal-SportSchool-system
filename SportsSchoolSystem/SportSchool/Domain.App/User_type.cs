@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices.JavaScript;
+using Domain.App.Identity;
 
 
 namespace Domain;
@@ -17,5 +18,6 @@ public class User_type
 
     public DateTime Until { get; set; } = default!;
     
-    public ICollection<User>? User { get; set; }
+    
+    public ICollection<AppUser>? AppUsers { get; set; }
 }

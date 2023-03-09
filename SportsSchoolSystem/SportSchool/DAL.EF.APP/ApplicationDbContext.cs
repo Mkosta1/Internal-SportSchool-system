@@ -1,11 +1,12 @@
 ﻿using Domain;
+using Domain.App.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.EF.APP;
 
 
-public class ApplicationDbContext : IdentityDbContext
+public class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, Guid>
 {
     public DbSet<Competition> Competition { get; set; } = default!;
     public DbSet<Excercise> Excercise { get; set; } = default!;
@@ -14,7 +15,6 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Monthly_subscription> Monthly_subscription { get; set; } = default!;
     public DbSet<Sports_school> Sports_school { get; set; } = default!;
     public DbSet<Training> Training { get; set; } = default!;
-    public DbSet<User> User { get; set; } = default!;
     public DbSet<User_at_training> User_at_training { get; set; } = default!;
     public DbSet<User_group> User_group { get; set; } = default!;
     public DbSet<User_in_group> User_in_group { get; set; } = default!;

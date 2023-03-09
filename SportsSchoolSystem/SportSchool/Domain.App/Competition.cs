@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.App.Identity;
 
 
 namespace Domain;
@@ -16,8 +17,8 @@ public class Competition
     public DateTime Since { get; set; } = default!;
 
     public DateTime Until { get; set; } = default!;
-    
-    public ICollection<User>? User { get; set; }
+
+    public ICollection<AppUser>? AppUsers { get; set; }
     
     public int Location_id { get; set; }
     public Location? Location { get; set; }
