@@ -4,7 +4,7 @@ using Domain.App.Identity;
 
 namespace Domain;
 
-public class Monthly_subscription
+public class MonthlySubscription
 {
     public int Id { get; set; }
     
@@ -20,5 +20,5 @@ public class Monthly_subscription
     public ICollection<AppUser>? AppUsers { get; set; }
     
     public int Sports_school_id { get; set; }
-    public Sports_school? Sports_school { get; set; }
+    public SportsSchool? Sports_school { get; set; }
 }

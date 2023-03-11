@@ -17,5 +17,5 @@ public class Message
     
     public DateTime Date { get; set; } = default!;
     
-    public ICollection<Sports_school>? Sports_school { get; set; }
+    public ICollection<SportsSchool>? Sports_school { get; set; }
 }

@@ -5,7 +5,7 @@ using Domain.Contracts.Base;
 
 namespace Domain;
 
-public class User_in_group : IDomainEntityId
+public class UserInGroup : IDomainEntityId
 {
 
     public Guid Id { get; set; }
@@ -17,5 +17,5 @@ public class User_in_group : IDomainEntityId
     
     
     public int User_group_id { get; set; }
-    public User_group? User_group { get; set; }
+    public UserGroup? User_group { get; set; }
 }

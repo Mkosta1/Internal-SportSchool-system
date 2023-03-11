@@ -5,7 +5,7 @@ using Domain.Contracts.Base;
 
 namespace Domain;
 
-public class User_at_training : IDomainEntityId
+public class UserAtTraining : IDomainEntityId
 {
      public Guid Id { get; set; }
      public AppUser? AppUser { get; set; }

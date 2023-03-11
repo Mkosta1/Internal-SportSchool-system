@@ -3,7 +3,7 @@ using Domain.App.Identity;
 
 namespace Domain;
 
-public class Sports_school
+public class SportsSchool
 {
     
     public int Id { get; set; }
@@ -24,7 +24,7 @@ public class Sports_school
     
     public ICollection<AppUser>? AppUsers { get; set; }
     
-    public ICollection<Monthly_subscription>? MonthlySubscriptions { get; set; }
+    public ICollection<MonthlySubscription>? MonthlySubscriptions { get; set; }
     
     public int Message_id { get; set; }
     public Message? Message { get; set; }

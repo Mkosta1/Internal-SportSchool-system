@@ -2,7 +2,7 @@
 
 namespace Domain;
 
-public class User_group
+public class UserGroup
 {
     public int Id { get; set; }
     
@@ -12,5 +12,5 @@ public class User_group
     
     public int Size { get; set; } = default!;
     
-    public ICollection<User_in_group>? User_in_group { get; set; }
+    public ICollection<UserInGroup>? User_in_group { get; set; }
 }

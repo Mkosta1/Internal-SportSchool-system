@@ -5,7 +5,7 @@ using Domain.App.Identity;
 
 namespace Domain;
 
-public class User_type
+public class UserType
 {
     
     public int Id { get; set; }
