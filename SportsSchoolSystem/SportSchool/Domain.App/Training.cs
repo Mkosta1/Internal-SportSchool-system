@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Contracts.Base;
 
 namespace Domain;
 
-public class Training
+public class Training : IDomainEntityId
 {
     
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     [MinLength(1)]
     [MaxLength(128)]
@@ -13,7 +14,7 @@ public class Training
     
     public int Duration { get; set; } = default!;
     
-    public ICollection<UserAtTraining>? User_at_training { get; set; }
+    public ICollection<UserAtTraining>? UserAtTrainings { get; set; }
     
     public int Location_id { get; set; }
     public Location? Location { get; set; }

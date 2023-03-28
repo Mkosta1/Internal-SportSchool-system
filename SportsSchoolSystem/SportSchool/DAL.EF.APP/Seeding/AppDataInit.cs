@@ -1,4 +1,5 @@
-﻿using Domain.App.Identity;
+﻿using Domain;
+using Domain.App.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,7 +31,10 @@ public static class AppDataInit
                 Id = userData.id,
                 Email = userData.email,
                 UserName = userData.email,
+                FirstName = "Admin",
+                LastName = "App",
                 EmailConfirmed = true,
+
             };
             var result = userManager.CreateAsync(user, userData.pwd).Result;
             if (!result.Succeeded)
@@ -44,6 +48,26 @@ public static class AppDataInit
     public static void SeedAppData(ApplicationDbContext context)
     {
         
+        SeedAppDataMonthlyUserType(context);
+        
+        context.SaveChanges();
+
     }
+    
+    
+    
+    private static void SeedAppDataMonthlyUserType(ApplicationDbContext context)
+    {
+        if (context.UserType.Any()) return;
+
+        context.UserType.Add(new UserType()
+            {
+                Name = "Member",
+                Since = new DateTime(05/03/2023),
+                Until = new DateTime(05/03/2023)
+            }
+        );
+    }
+
     
 }

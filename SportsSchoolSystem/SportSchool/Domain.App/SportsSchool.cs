@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.App.Identity;
+using Domain.Contracts.Base;
 
 namespace Domain;
 
-public class SportsSchool
+public class SportsSchool : IDomainEntityId
 {
     
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     [MinLength(1)]
     [MaxLength(128)]
@@ -22,7 +23,7 @@ public class SportsSchool
 
     public ICollection<Training>? Training { get; set; }
     
-    public ICollection<AppUser>? AppUsers { get; set; }
+    public ICollection<AppUser>? AppUser { get; set; }
     
     public ICollection<MonthlySubscription>? MonthlySubscriptions { get; set; }
     

@@ -1,4 +1,5 @@
-﻿using Domain.Contracts.Base;
+﻿using System.ComponentModel.DataAnnotations;
+using Domain.Contracts.Base;
 using Microsoft.AspNetCore.Identity;
 
 namespace Domain.App.Identity;
@@ -6,6 +7,13 @@ namespace Domain.App.Identity;
 public class AppUser : IdentityUser<Guid>, IDomainEntityId
 {
 
+
+    [MaxLength(128)] 
+    public string FirstName { get; set; } = default!;
+    
+    [MaxLength(128)] 
+    public string LastName { get; set; } = default!;
+    
     public ICollection<UserInGroup>? User_in_group { get; set; }
     public ICollection<UserAtTraining>? User_at_training { get; set; }
     

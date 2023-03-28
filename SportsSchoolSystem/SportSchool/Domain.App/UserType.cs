@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices.JavaScript;
 using Domain.App.Identity;
+using Domain.Contracts.Base;
 
 
 namespace Domain;
 
-public class UserType
+public class UserType  : IDomainEntityId
 {
     
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     [MinLength(1)]
     [MaxLength(64)]

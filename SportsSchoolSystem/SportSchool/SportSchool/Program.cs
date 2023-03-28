@@ -1,5 +1,6 @@
  using DAL;
-using DAL.EF.APP;
+ using DAL.Contracts.App;
+ using DAL.EF.APP;
  using DAL.EF.APP.Seeding;
  using Domain.App.Identity;
  using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,14 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+//register our UOW with scoped lifecycle
+
+builder.Services.AddScoped<IAppUOW, AppUOW>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services

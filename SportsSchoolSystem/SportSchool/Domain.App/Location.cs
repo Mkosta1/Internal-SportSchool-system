@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Contracts.Base;
 
 namespace Domain;
 
-public class Location
+public class Location : IDomainEntityId
 {
     
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     [MinLength(1)]
     [MaxLength(64)]
