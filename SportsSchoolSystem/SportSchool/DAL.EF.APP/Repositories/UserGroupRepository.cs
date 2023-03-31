@@ -14,7 +14,7 @@ public class UserGroupRepository
     
     public override async Task<IEnumerable<UserGroup>> AllAsync()
     {
-        return await RepositoryDbSet.Include(e => e.Id)
+        return await RepositoryDbSet.Include(e => e.User_in_group)
             .OrderBy(e => e.Name)
             .ToListAsync();
     }

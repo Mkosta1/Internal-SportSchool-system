@@ -14,7 +14,7 @@ public class MessageRepository
     
     public override async Task<IEnumerable<Message>> AllAsync()
     {
-        return await RepositoryDbSet.Include(e => e.Id)
+        return await RepositoryDbSet.Include(e => e.Sports_school)
             .OrderBy(e => e.Date)
             .ToListAsync();
     }

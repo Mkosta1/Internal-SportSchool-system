@@ -21,7 +21,7 @@ public class Competition : IDomainEntityId
 
     public ICollection<AppUser>? AppUser { get; set; }
     
-    public int Location_id { get; set; }
+    public Guid Location_id { get; set; }
     public Location? Location { get; set; }
     
 }

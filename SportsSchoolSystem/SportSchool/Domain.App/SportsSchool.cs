@@ -27,7 +27,7 @@ public class SportsSchool : IDomainEntityId
     
     public ICollection<MonthlySubscription>? MonthlySubscriptions { get; set; }
     
-    public int Message_id { get; set; }
+    public Guid Message_id { get; set; }
     public Message? Message { get; set; }
     
 }

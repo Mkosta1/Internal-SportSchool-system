@@ -10,10 +10,13 @@ using DAL.EF.APP;
 using DAL.EF.APP.Repositories;
 using Domain;
 using Domain.App.Identity;
+using Helpers.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace SportSchool.Controllers
 {
+    [Authorize]
     public class CompetitionController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
@@ -31,7 +34,7 @@ namespace SportSchool.Controllers
         public async Task<IActionResult> Index()
         {
             var vm = await 
-                _uow.CompetitionRepository.AllAsync();
+                _uow.CompetitionRepository.AllAsync(User.GetUserId());
             return View(vm);
         }
 

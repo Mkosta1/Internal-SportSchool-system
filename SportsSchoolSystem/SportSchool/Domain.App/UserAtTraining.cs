@@ -14,6 +14,6 @@ public class UserAtTraining : IDomainEntityId
      
      public DateTime Until { get; set; } = default!;
 
-     public int Training_id { get; set; }
+     public Guid Training_id { get; set; }
      public Training? Training { get; set; }
 }

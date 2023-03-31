@@ -16,13 +16,13 @@ public class Training : IDomainEntityId
     
     public ICollection<UserAtTraining>? UserAtTrainings { get; set; }
     
-    public int Location_id { get; set; }
+    public Guid Location_id { get; set; }
     public Location? Location { get; set; }
     
-    public int Excercise_id { get; set; }
+    public Guid Excercise_id { get; set; }
     public Excercise? Excercise { get; set; }
     
-    public int Sports_school_id { get; set; }
+    public Guid Sports_school_id { get; set; }
     public SportsSchool? Sports_school { get; set; }
 
 }

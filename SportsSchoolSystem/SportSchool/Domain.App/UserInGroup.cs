@@ -16,6 +16,6 @@ public class UserInGroup : IDomainEntityId
     public DateTime Until { get; set; } = default!;
     
     
-    public int User_group_id { get; set; }
+    public Guid User_group_id { get; set; }
     public UserGroup? User_group { get; set; }
 }

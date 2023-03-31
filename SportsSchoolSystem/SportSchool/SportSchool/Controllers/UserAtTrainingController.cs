@@ -10,10 +10,12 @@ using DAL.EF.APP;
 using DAL.EF.APP.Repositories;
 using Domain;
 using Domain.App.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace SportSchool.Controllers
 {
+    [Authorize]
     public class UserAtTrainingController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

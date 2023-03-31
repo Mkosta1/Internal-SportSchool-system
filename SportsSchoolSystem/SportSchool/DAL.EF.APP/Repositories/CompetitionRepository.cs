@@ -27,8 +27,11 @@ public class CompetitionRepository
             .FirstOrDefaultAsync(m => m.Id == id);
     }
 
-    public Task<IEnumerable<Competition>> AllAsync(Guid userId)
+    public virtual async Task<IEnumerable<Competition>> AllAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        return await RepositoryDbSet
+            .Include(e => e.AppUser)
+            .OrderBy(e => e.Name)
+            .ToListAsync();
     }
 } 

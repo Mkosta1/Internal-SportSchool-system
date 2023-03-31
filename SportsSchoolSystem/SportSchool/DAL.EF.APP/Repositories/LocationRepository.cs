@@ -14,7 +14,7 @@ public class LocationRepository
     
     public override async Task<IEnumerable<Location>> AllAsync()
     {
-        return await RepositoryDbSet.Include(e => e.Id)
+        return await RepositoryDbSet.Include(e => e.Competition)
             .OrderBy(e => e.Name)
             .ToListAsync();
     }

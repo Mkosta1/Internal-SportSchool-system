@@ -14,7 +14,7 @@ public class TrainingRepository
     
     public override async Task<IEnumerable<Training>> AllAsync()
     {
-        return await RepositoryDbSet.Include(e => e.Id)
+        return await RepositoryDbSet.Include(e => e.UserAtTrainings)
             .OrderBy(e => e.Name)
             .ToListAsync();
     }
