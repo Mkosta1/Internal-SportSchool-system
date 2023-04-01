@@ -124,7 +124,7 @@ namespace DAL.EF.APP.Migrations
                     Group_size = table.Column<int>(type: "integer", nullable: false),
                     Since = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Until = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Location_id = table.Column<int>(type: "integer", nullable: false),
+                    Location_id = table.Column<Guid>(type: "uuid", nullable: false),
                     LocationId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -146,7 +146,7 @@ namespace DAL.EF.APP.Migrations
                     Address = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     PhoneNumber = table.Column<string>(type: "character varying(12)", maxLength: 12, nullable: false),
                     Email = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    Message_id = table.Column<int>(type: "integer", nullable: false),
+                    Message_id = table.Column<Guid>(type: "uuid", nullable: false),
                     MessageId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -168,7 +168,7 @@ namespace DAL.EF.APP.Migrations
                     Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     Price = table.Column<double>(type: "double precision", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Sports_school_id = table.Column<int>(type: "integer", nullable: false),
+                    Sports_school_id = table.Column<Guid>(type: "uuid", nullable: false),
                     Sports_schoolId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -189,11 +189,11 @@ namespace DAL.EF.APP.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     Duration = table.Column<int>(type: "integer", nullable: false),
-                    Location_id = table.Column<int>(type: "integer", nullable: false),
+                    Location_id = table.Column<Guid>(type: "uuid", nullable: false),
                     LocationId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Excercise_id = table.Column<int>(type: "integer", nullable: false),
+                    Excercise_id = table.Column<Guid>(type: "uuid", nullable: false),
                     ExcerciseId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Sports_school_id = table.Column<int>(type: "integer", nullable: false),
+                    Sports_school_id = table.Column<Guid>(type: "uuid", nullable: false),
                     Sports_schoolId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -371,7 +371,7 @@ namespace DAL.EF.APP.Migrations
                     AppUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     Since = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Until = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Training_id = table.Column<int>(type: "integer", nullable: false),
+                    Training_id = table.Column<Guid>(type: "uuid", nullable: false),
                     TrainingId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -399,7 +399,7 @@ namespace DAL.EF.APP.Migrations
                     AppUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     Since = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Until = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    User_group_id = table.Column<int>(type: "integer", nullable: false),
+                    User_group_id = table.Column<Guid>(type: "uuid", nullable: false),
                     User_groupId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>

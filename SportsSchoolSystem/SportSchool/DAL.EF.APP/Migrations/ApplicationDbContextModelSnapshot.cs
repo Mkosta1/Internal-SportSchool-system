@@ -168,8 +168,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("LocationId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Location_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Location_id")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -278,8 +278,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("Sports_schoolId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Sports_school_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Sports_school_id")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -307,8 +307,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("MessageId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Message_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Message_id")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -334,14 +334,14 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("ExcerciseId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Excercise_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Excercise_id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("LocationId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Location_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Location_id")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -351,8 +351,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("Sports_schoolId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Sports_school_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Sports_school_id")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -380,8 +380,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("TrainingId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Training_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Training_id")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Until")
                         .HasColumnType("timestamp with time zone");
@@ -432,8 +432,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("User_groupId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("User_group_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("User_group_id")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
