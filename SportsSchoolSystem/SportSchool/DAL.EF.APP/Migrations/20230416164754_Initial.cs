@@ -226,13 +226,13 @@ namespace DAL.EF.APP.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     FirstName = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     LastName = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    Monthly_subscription_Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Monthly_subscription_Id = table.Column<int>(type: "integer", nullable: false),
                     Monthly_subscriptionId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Sports_school_Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Sports_school_Id = table.Column<int>(type: "integer", nullable: false),
                     SportsSchoolId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Competition_Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Competition_Id = table.Column<int>(type: "integer", nullable: false),
                     CompetitionId = table.Column<Guid>(type: "uuid", nullable: true),
-                    User_type_Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    User_type_Id = table.Column<int>(type: "integer", nullable: false),
                     User_typeId = table.Column<Guid>(type: "uuid", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -274,6 +274,26 @@ namespace DAL.EF.APP.Migrations
                         name: "FK_AspNetUsers_UserType_User_typeId",
                         column: x => x.User_typeId,
                         principalTable: "UserType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppRefreshToken",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    AppUserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RefreshToken = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    ExpirationDT = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppRefreshToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppRefreshToken_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -420,6 +440,11 @@ namespace DAL.EF.APP.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppRefreshToken_AppUserId",
+                table: "AppRefreshToken",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -530,6 +555,9 @@ namespace DAL.EF.APP.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AppRefreshToken");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
