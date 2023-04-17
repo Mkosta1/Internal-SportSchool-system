@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Base;
 using Domain.Contracts.Base;
 
 
 namespace Domain;
 
-public class Message : IDomainEntityId
+public class Message : DomainEntityId
 {
-    public Guid Id { get; set; }
-    
+
     [MinLength(1)]
     [MaxLength(128)]
     public string Subject { get; set; } = default!;

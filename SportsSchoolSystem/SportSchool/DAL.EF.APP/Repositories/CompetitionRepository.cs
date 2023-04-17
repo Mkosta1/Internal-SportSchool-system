@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DAL.EF.APP.Repositories;
 
 public class CompetitionRepository
-    : EfBaseRepository<Competition, ApplicationDbContext>, ICompetitionRepository
+    : EFBaseRepository<Competition, ApplicationDbContext>, ICompetitionRepository
 {
 
     public CompetitionRepository(ApplicationDbContext dataContext) : base(dataContext)
@@ -16,7 +16,8 @@ public class CompetitionRepository
 
     public override async Task<IEnumerable<Competition>> AllAsync()
     {
-        return await RepositoryDbSet.Include(e => e.AppUser)
+        return await RepositoryDbSet
+            .Include(e => e.AppUser)
             .OrderBy(e => e.Name)
             .ToListAsync();
     }
@@ -30,8 +31,14 @@ public class CompetitionRepository
     public virtual async Task<IEnumerable<Competition>> AllAsync(Guid userId)
     {
         return await RepositoryDbSet
-            .Include(e => e.AppUser)
             .OrderBy(e => e.Name)
             .ToListAsync();
+    }
+
+    public virtual async Task<Competition?> FindAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet
+            .Include(t => t.AppUser)
+            .FirstOrDefaultAsync(m => m.Id == id);
     }
 } 

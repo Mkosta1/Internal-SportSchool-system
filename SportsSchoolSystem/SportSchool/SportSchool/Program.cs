@@ -1,3 +1,4 @@
+ using System.Text;
  using DAL;
  using DAL.Contracts.App;
  using DAL.EF.APP;
@@ -5,8 +6,9 @@
  using Domain.App.Identity;
  using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+ using Microsoft.IdentityModel.Tokens;
 
-var builder = WebApplication.CreateBuilder(args);
+ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
@@ -30,8 +32,42 @@ builder.Services
     .AddDefaultUI()
     //.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services
+    .AddAuthentication()
+    .AddCookie(options => { options.SlidingExpiration = true; })
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = false;
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidIssuer = builder.Configuration.GetValue<string>("JWT: Issuer"),
+            ValidAudience = builder.Configuration.GetValue<string>("JWT: Audience"),
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWT: Issuer"))
+            ),
+            ClockSkew = TimeSpan.Zero,
+        };
+    });
+
+ 
+ 
 builder.Services.AddControllersWithViews();
 
+ 
+ builder.Services.AddCors(options =>
+     {
+         options.AddPolicy("CorsAllowAll", policy =>
+         {
+             policy.AllowAnyHeader();
+             policy.AllowAnyMethod();
+             policy.AllowAnyOrigin();
+         });
+     }
+ );
+ 
+ 
 //====================================
 var app = builder.Build();
 //====================================
@@ -51,11 +87,17 @@ else
     app.UseHsts();
 }
 
+ // is used to get rid of postgres exception about using the timezones
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+ 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+ 
+ 
+app.UseCors("CorsAllowAll");
+ 
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -102,28 +144,28 @@ static void SetUpAppData(IApplicationBuilder app, IWebHostEnvironment environmen
     //TODO: wait for db connection
     
     //database drop
-    if (configuration.GetValue<bool>("DataInit: DropDataBase"))
+    if (configuration.GetValue<bool>("DataInit:DropDataBase"))
     {
         logger.LogWarning("Dropping database!");
         AppDataInit.DropDatabase(context);
     }
     
     //migartion
-    if (configuration.GetValue<bool>("DataInit: MigrateDatabase"))
+    if (configuration.GetValue<bool>("DataInit:MigrateDatabase"))
     {
         logger.LogInformation("Migrating database!");
         AppDataInit.MigrateDatabase(context);
     }
     
     //seed identity
-    if (configuration.GetValue<bool>("DataInit: SeedIdentity"))
+    if (configuration.GetValue<bool>("DataInit:SeedIdentity"))
     {
         logger.LogWarning("Seeding identity!");
         AppDataInit.SeedIdentity(userManager, roleManager);
     }
     
     //seed application data
-    if (configuration.GetValue<bool>("DataInit: SeedData"))
+    if (configuration.GetValue<bool>("DataInit:SeedData"))
     {
         logger.LogWarning("Seed app data!");
         AppDataInit.SeedAppData(context);

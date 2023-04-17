@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DAL.EF.APP.Repositories;
 
 public class UserAtTrainingRepository
-    : EfBaseRepository<UserAtTraining, ApplicationDbContext>, IUserAtTrainingRepository
+    : EFBaseRepository<UserAtTraining, ApplicationDbContext>, IUserAtTrainingRepository
 {
     public UserAtTrainingRepository(ApplicationDbContext dataContext) : base(dataContext)
     {
@@ -22,6 +22,21 @@ public class UserAtTrainingRepository
     public override async Task<UserAtTraining?> FindAsync(Guid id)
     {
         return await RepositoryDbSet
+            .FirstOrDefaultAsync(m => m.Id == id);
+    }
+
+    public virtual async Task<IEnumerable<UserAtTraining>> AllAsync(Guid userId)
+    {
+        return await RepositoryDbSet
+            .Include(e => e.AppUser)
+            .OrderBy(e => e.Since)
+            .ToListAsync();
+    }
+
+    public virtual async Task<UserAtTraining?> FindAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet
+            .Include(t => t.AppUser)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
 }

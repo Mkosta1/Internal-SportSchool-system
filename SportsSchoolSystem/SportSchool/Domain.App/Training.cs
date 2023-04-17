@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Base;
 using Domain.Contracts.Base;
 
 namespace Domain;
 
-public class Training : IDomainEntityId
+public class Training : DomainEntityId
 {
     
-    public Guid Id { get; set; }
     
     [MinLength(1)]
     [MaxLength(128)]

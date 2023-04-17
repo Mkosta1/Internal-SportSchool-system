@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.App.Identity;
+using Domain.Base;
 using Domain.Contracts.Base;
 
 
 namespace Domain;
 
-public class UserInGroup : IDomainEntityId
+public class UserInGroup : DomainEntityId
 {
-
-    public Guid Id { get; set; }
     public AppUser? AppUser { get; set; }
     
     

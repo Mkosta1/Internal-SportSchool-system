@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Base;
 using Domain.Contracts.Base;
 
 namespace Domain;
 
-public class Excercise : IDomainEntityId
+public class Excercise : DomainEntityId
 {
-    public Guid Id { get; set; }
-    
+
     [MinLength(1)]
     [MaxLength(128)]
     public string Name { get; set; } = default!;

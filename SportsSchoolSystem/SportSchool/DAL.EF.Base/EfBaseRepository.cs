@@ -4,29 +4,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.EF.Base;
 
-public class EfBaseRepository<TEntity, TDbContext> : EfBaseRepository<TEntity, Guid, TDbContext>, IBaseRepository<TEntity> 
+public class EFBaseRepository<TEntity, TDbContext> : EFBaseRepository<TEntity, Guid, TDbContext>,
+    IBaseRepository<TEntity>
     where TEntity : class, IDomainEntityId
     where TDbContext : DbContext
 {
-    public EfBaseRepository(TDbContext dataContext) : base(dataContext)
+    public EFBaseRepository(TDbContext dataContext) : base(dataContext)
     {
     }
 }
 
-
-public class EfBaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity, TKey> 
-    where TEntity : class, IDomainEntityId<TKey> 
+public class EFBaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity, TKey>
+    where TEntity : class, IDomainEntityId<TKey>
     where TKey : struct, IEquatable<TKey>
     where TDbContext : DbContext
 {
-    
     protected TDbContext RepositoryDbContext;
     protected DbSet<TEntity> RepositoryDbSet;
 
-    public EfBaseRepository(TDbContext dataContext){
+    public EFBaseRepository(TDbContext dataContext)
+    {
         RepositoryDbContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
         RepositoryDbSet = RepositoryDbContext.Set<TEntity>();
     }
+
 
     public virtual async Task<IEnumerable<TEntity>> AllAsync()
     {
@@ -50,7 +51,7 @@ public class EfBaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEnti
 
     public virtual TEntity Remove(TEntity entity)
     {
-       return RepositoryDbSet.Remove(entity).Entity;
+        return RepositoryDbSet.Remove(entity).Entity;
     }
 
     public virtual async Task<TEntity?> RemoveAsync(TKey id)

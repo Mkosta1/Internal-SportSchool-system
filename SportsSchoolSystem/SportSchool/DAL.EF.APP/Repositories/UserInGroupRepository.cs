@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DAL.EF.APP.Repositories;
 
 public class UserInGroupRepository
-    : EfBaseRepository<UserInGroup, ApplicationDbContext>, IUserInGroupRepository
+    : EFBaseRepository<UserInGroup, ApplicationDbContext>, IUserInGroupRepository
 {
     public UserInGroupRepository(ApplicationDbContext dataContext) : base(dataContext)
     {
@@ -22,6 +22,21 @@ public class UserInGroupRepository
     public override async Task<UserInGroup?> FindAsync(Guid id)
     {
         return await RepositoryDbSet
+            .FirstOrDefaultAsync(m => m.Id == id);
+    }
+
+    public virtual async Task<IEnumerable<UserInGroup>> AllAsync(Guid userId)
+    {
+        return await RepositoryDbSet
+            .Include(e => e.AppUser)
+            .OrderBy(e => e.Since)
+            .ToListAsync();
+    }
+
+    public virtual async Task<UserInGroup?> FindAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet
+            .Include(t => t.AppUser)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
 }

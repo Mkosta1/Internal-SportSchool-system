@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.App.Identity;
+using Domain.Base;
 using Domain.Contracts.Base;
 
 namespace Domain;
 
-public class SportsSchool : IDomainEntityId
+public class SportsSchool : DomainEntityId
 {
     
-    public Guid Id { get; set; }
     
     [MinLength(1)]
     [MaxLength(128)]

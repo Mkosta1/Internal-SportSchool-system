@@ -22,6 +22,30 @@ namespace DAL.EF.APP.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.App.Identity.AppRefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ExpirationDT")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("AppRefreshToken");
+                });
+
             modelBuilder.Entity("Domain.App.Identity.AppRole", b =>
                 {
                     b.Property<Guid>("Id")
@@ -61,8 +85,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("CompetitionId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Competition_Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Competition_Id")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -94,8 +118,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("Monthly_subscriptionId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Monthly_subscription_Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Monthly_subscription_Id")
+                        .HasColumnType("integer");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -120,8 +144,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("SportsSchoolId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Sports_school_Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Sports_school_Id")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
@@ -133,8 +157,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("User_typeId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("User_type_Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("User_type_Id")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -569,6 +593,17 @@ namespace DAL.EF.APP.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.App.Identity.AppRefreshToken", b =>
+                {
+                    b.HasOne("Domain.App.Identity.AppUser", "AppUser")
+                        .WithMany("AppRefreshTokens")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("Domain.App.Identity.AppUser", b =>
                 {
                     b.HasOne("Domain.Competition", "Competition")
@@ -741,6 +776,8 @@ namespace DAL.EF.APP.Migrations
 
             modelBuilder.Entity("Domain.App.Identity.AppUser", b =>
                 {
+                    b.Navigation("AppRefreshTokens");
+
                     b.Navigation("User_at_training");
 
                     b.Navigation("User_in_group");

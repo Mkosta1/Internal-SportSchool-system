@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DAL.EF.APP.Repositories;
 
 public class MessageRepository
-    : EfBaseRepository<Message, ApplicationDbContext>, IMessageRepository
+    : EFBaseRepository<Message, ApplicationDbContext>, IMessageRepository
 {
     public MessageRepository(ApplicationDbContext dataContext) : base(dataContext)
     {
@@ -23,5 +23,17 @@ public class MessageRepository
     {
         return await RepositoryDbSet
             .FirstOrDefaultAsync(m => m.Id == id);
+    }
+
+    public virtual async Task<IEnumerable<Message>> AllAsync(Guid userId)
+    {
+        return await RepositoryDbSet
+            .OrderBy(e => e.Date)
+            .ToListAsync();
+    }
+
+    public Task<Message?> FindAsync(Guid id, Guid userId)
+    {
+        throw new NotImplementedException();
     }
 }

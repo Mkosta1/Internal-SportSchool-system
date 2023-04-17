@@ -12,3 +12,4 @@ public interface IDomainEntityId<TKey>
     TKey Id { get; set; }
     
 }
+

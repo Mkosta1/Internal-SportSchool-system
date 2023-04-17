@@ -16,11 +16,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SportSchool.Controllers
 {
-    [Authorize]
-    public class CompetitionController : Controller
-    {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly IAppUOW _uow;
+[Authorize]
+public class CompetitionController : Controller
+{
+private readonly UserManager<AppUser> _userManager;
+private readonly IAppUOW _uow;
 
         public CompetitionController(
             UserManager<AppUser> userManager,
@@ -143,6 +143,8 @@ namespace SportSchool.Controllers
             await _uow.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+    
+
 
         
     }
