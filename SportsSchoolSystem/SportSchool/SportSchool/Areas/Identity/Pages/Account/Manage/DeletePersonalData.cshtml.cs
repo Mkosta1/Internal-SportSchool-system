@@ -13,12 +13,14 @@ using Domain.App.Identity;
 
 namespace SportSchool.Areas.Identity.Pages.Account.Manage
 {
+    /// <inheritdoc />
     public class DeletePersonalDataModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
 
+        /// <inheritdoc />
         public DeletePersonalDataModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
@@ -57,6 +59,10 @@ namespace SportSchool.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public bool RequirePassword { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -69,6 +75,11 @@ namespace SportSchool.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);

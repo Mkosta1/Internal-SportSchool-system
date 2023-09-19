@@ -10,7 +10,7 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
     {
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
         // does not actually connect to db
-        optionsBuilder.UseNpgsql("");
+        optionsBuilder.UseNpgsql("Host=localhost:5445;Database=aw-train;Username=postgres;Password=postgres");
         //Host=localhost:5445;Database=aw-train;Username=postgres;Password=postgres
         return new ApplicationDbContext(optionsBuilder.Options);
     }

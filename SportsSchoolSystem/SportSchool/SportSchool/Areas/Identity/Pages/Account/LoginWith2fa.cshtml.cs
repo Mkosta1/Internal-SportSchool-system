@@ -15,16 +15,18 @@ using Domain.App.Identity;
 
 namespace SportSchool.Areas.Identity.Pages.Account
 {
-    public class LoginWith2faModel : PageModel
+    /// <inheritdoc />
+    public class LoginWith2FaModel : PageModel
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
-        private readonly ILogger<LoginWith2faModel> _logger;
+        private readonly ILogger<LoginWith2FaModel> _logger;
 
-        public LoginWith2faModel(
+        /// <inheritdoc />
+        public LoginWith2FaModel(
             SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
-            ILogger<LoginWith2faModel> logger)
+            ILogger<LoginWith2FaModel> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -74,6 +76,13 @@ namespace SportSchool.Areas.Identity.Pages.Account
             public bool RememberMachine { get; set; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rememberMe"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public async Task<IActionResult> OnGetAsync(bool rememberMe, string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
@@ -90,6 +99,13 @@ namespace SportSchool.Areas.Identity.Pages.Account
             return Page();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rememberMe"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public async Task<IActionResult> OnPostAsync(bool rememberMe, string returnUrl = null)
         {
             if (!ModelState.IsValid)

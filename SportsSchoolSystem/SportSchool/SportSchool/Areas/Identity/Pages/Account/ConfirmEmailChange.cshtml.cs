@@ -14,11 +14,13 @@ using Domain.App.Identity;
 
 namespace SportSchool.Areas.Identity.Pages.Account
 {
+    /// <inheritdoc />
     public class ConfirmEmailChangeModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
+        /// <inheritdoc />
         public ConfirmEmailChangeModel(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
@@ -32,7 +34,7 @@ namespace SportSchool.Areas.Identity.Pages.Account
         [TempData]
         public string StatusMessage { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string userId, string email, string code)
+        private async Task<IActionResult> OnGetAsync(string userId, string email, string code)
         {
             if (userId == null || email == null || code == null)
             {

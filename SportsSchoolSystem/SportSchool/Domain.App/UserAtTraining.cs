@@ -8,12 +8,15 @@ namespace Domain;
 
 public class UserAtTraining : DomainEntityId
 {
+     public Guid? AppUserId { get; set; }
      public AppUser? AppUser { get; set; }
 
-     public DateTime Since { get; set; } = default!;
+     public DateTime? Since { get; set; } = default!;
      
-     public DateTime Until { get; set; } = default!;
+     public DateTime? Until { get; set; } = default!;
 
-     public Guid Training_id { get; set; }
+     public Guid TrainingId { get; set; }
      public Training? Training { get; set; }
+     
+     
 }

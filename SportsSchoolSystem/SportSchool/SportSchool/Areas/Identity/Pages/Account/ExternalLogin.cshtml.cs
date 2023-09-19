@@ -21,6 +21,7 @@ using Domain.App.Identity;
 
 namespace SportSchool.Areas.Identity.Pages.Account
 {
+    /// <inheritdoc />
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
@@ -31,6 +32,7 @@ namespace SportSchool.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
+        /// <inheritdoc />
         public ExternalLoginModel(
             SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
@@ -87,8 +89,18 @@ namespace SportSchool.Areas.Identity.Pages.Account
             public string Email { get; set; }
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnGet() => RedirectToPage("./Login");
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         public IActionResult OnPost(string provider, string returnUrl = null)
         {
             // Request a redirect to the external login provider.
@@ -97,6 +109,12 @@ namespace SportSchool.Areas.Identity.Pages.Account
             return new ChallengeResult(provider, properties);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <param name="remoteError"></param>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -139,6 +157,11 @@ namespace SportSchool.Areas.Identity.Pages.Account
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");

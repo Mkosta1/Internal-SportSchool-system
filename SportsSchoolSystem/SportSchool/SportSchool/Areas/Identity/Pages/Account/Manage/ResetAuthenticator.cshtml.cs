@@ -12,12 +12,14 @@ using Domain.App.Identity;
 
 namespace SportSchool.Areas.Identity.Pages.Account.Manage
 {
+    /// <inheritdoc />
     public class ResetAuthenticatorModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<ResetAuthenticatorModel> _logger;
 
+        /// <inheritdoc />
         public ResetAuthenticatorModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
@@ -35,6 +37,10 @@ namespace SportSchool.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -46,6 +52,10 @@ namespace SportSchool.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);

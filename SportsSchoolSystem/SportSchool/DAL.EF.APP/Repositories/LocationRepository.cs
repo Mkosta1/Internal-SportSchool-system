@@ -38,4 +38,15 @@ public class LocationRepository
             .Include(t => t.Competition)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
+
+    public async Task<Location?> RemoveAsync(Guid id, Guid userId)
+    {
+        var location = await FindAsync(id, userId);
+        return location == null ? null : Remove(location);
+    }
+
+    public async Task<bool> IsOwnedByUserAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet.AnyAsync(t => t.Id == id && t.Id == userId);
+    }
 }

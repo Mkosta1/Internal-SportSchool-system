@@ -12,14 +12,16 @@ using Domain.App.Identity;
 
 namespace SportSchool.Areas.Identity.Pages.Account.Manage
 {
-    public class Disable2faModel : PageModel
+    /// <inheritdoc />
+    public class Disable2FaModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly ILogger<Disable2faModel> _logger;
+        private readonly ILogger<Disable2FaModel> _logger;
 
-        public Disable2faModel(
+        /// <inheritdoc />
+        public Disable2FaModel(
             UserManager<AppUser> userManager,
-            ILogger<Disable2faModel> logger)
+            ILogger<Disable2FaModel> logger)
         {
             _userManager = userManager;
             _logger = logger;
@@ -32,6 +34,11 @@ namespace SportSchool.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -48,6 +55,11 @@ namespace SportSchool.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);

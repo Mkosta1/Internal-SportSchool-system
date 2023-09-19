@@ -17,11 +17,13 @@ using Domain.App.Identity;
 
 namespace SportSchool.Areas.Identity.Pages.Account
 {
+    /// <inheritdoc />
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IEmailSender _emailSender;
 
+        /// <inheritdoc />
         public ForgotPasswordModel(UserManager<AppUser> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -50,7 +52,7 @@ namespace SportSchool.Areas.Identity.Pages.Account
             public string Email { get; set; }
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        private async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {

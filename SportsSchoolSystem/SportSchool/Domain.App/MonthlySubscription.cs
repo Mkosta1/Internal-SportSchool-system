@@ -20,6 +20,6 @@ public class MonthlySubscription : DomainEntityId
     
     public ICollection<AppUser>? AppUsers { get; set; }
     
-    public Guid Sports_school_id { get; set; }
-    public SportsSchool? Sports_school { get; set; }
+    public Guid SportsSchoolId { get; set; }
+    public SportsSchool? SportsSchool { get; set; }
 }

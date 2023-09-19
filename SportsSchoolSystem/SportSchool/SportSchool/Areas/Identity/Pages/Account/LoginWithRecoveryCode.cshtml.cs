@@ -13,12 +13,14 @@ using Microsoft.Extensions.Logging;
 using Domain.App.Identity;
 namespace SportSchool.Areas.Identity.Pages.Account
 {
+    /// <inheritdoc />
     public class LoginWithRecoveryCodeModel : PageModel
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
 
+        /// <inheritdoc />
         public LoginWithRecoveryCodeModel(
             SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
@@ -59,6 +61,12 @@ namespace SportSchool.Areas.Identity.Pages.Account
             public string RecoveryCode { get; set; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
@@ -73,6 +81,12 @@ namespace SportSchool.Areas.Identity.Pages.Account
             return Page();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             if (!ModelState.IsValid)

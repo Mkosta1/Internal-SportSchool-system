@@ -1,10 +1,19 @@
 ﻿using DAL.Contracts.Base;
 using Domain;
+using Domain.App;
 
 namespace DAL.Contracts.App;
 
-public interface IMessageRepository: IBaseRepository<Message>
+public interface IMessageRepository: IBaseRepository<Message>, IMessageRepositoryCustom<Message>
 {
-    public Task<IEnumerable<Message>> AllAsync(Guid userId);
-    public Task<Message?> FindAsync(Guid id, Guid userId);
+}
+
+public interface IMessageRepositoryCustom<TEntity>
+{
+    public Task<IEnumerable<TEntity>> AllAsync(Guid userId);
+    public Task<TEntity?> FindAsync(Guid id, Guid userId);
+
+    Task<TEntity?> RemoveAsync(Guid id, Guid userId);
+    
+    Task<bool> IsOwnedByUserAsync(Guid id, Guid userId);
 }

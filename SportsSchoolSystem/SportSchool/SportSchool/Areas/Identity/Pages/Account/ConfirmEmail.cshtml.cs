@@ -15,10 +15,17 @@ using Domain.App.Identity;
 
 namespace SportSchool.Areas.Identity.Pages.Account
 {
+    /// <summary>
+    /// Confirm email function 
+    /// </summary>
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
 
+        /// <summary>
+        /// Confirm email constructor
+        /// </summary>
+        /// <param name="userManager"></param>
         public ConfirmEmailModel(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
@@ -30,6 +37,12 @@ namespace SportSchool.Areas.Identity.Pages.Account
         /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
+        /// <summary>
+        /// Check if user did confirm the email from status code
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetAsync(string userId, string code)
         {
             if (userId == null || code == null)

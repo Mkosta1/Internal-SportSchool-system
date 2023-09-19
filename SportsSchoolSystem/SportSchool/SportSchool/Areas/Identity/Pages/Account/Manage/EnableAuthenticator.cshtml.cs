@@ -17,6 +17,7 @@ using Domain.App.Identity;
 
 namespace SportSchool.Areas.Identity.Pages.Account.Manage
 {
+    /// <inheritdoc />
     public class EnableAuthenticatorModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
@@ -25,6 +26,7 @@ namespace SportSchool.Areas.Identity.Pages.Account.Manage
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
+        /// <inheritdoc />
         public EnableAuthenticatorModel(
             UserManager<AppUser> userManager,
             ILogger<EnableAuthenticatorModel> logger,
@@ -85,6 +87,10 @@ namespace SportSchool.Areas.Identity.Pages.Account.Manage
             public string Code { get; set; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -98,6 +104,10 @@ namespace SportSchool.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);

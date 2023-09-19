@@ -32,7 +32,14 @@ namespace DAL.EF.APP.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("ExpirationDT")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("PreviousExpirationDT")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("PreviousRefreshToken")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("RefreshToken")
                         .IsRequired()
@@ -43,7 +50,7 @@ namespace DAL.EF.APP.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("AppRefreshToken");
+                    b.ToTable("AppRefreshTokens");
                 });
 
             modelBuilder.Entity("Domain.App.Identity.AppRole", b =>
@@ -82,12 +89,6 @@ namespace DAL.EF.APP.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("CompetitionId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Competition_Id")
-                        .HasColumnType("integer");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
@@ -115,11 +116,8 @@ namespace DAL.EF.APP.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("Monthly_subscriptionId")
+                    b.Property<Guid?>("MonthlySubscriptionId")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("Monthly_subscription_Id")
-                        .HasColumnType("integer");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -144,9 +142,6 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("SportsSchoolId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Sports_school_Id")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
@@ -154,17 +149,9 @@ namespace DAL.EF.APP.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<Guid?>("User_typeId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("User_type_Id")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CompetitionId");
-
-                    b.HasIndex("Monthly_subscriptionId");
+                    b.HasIndex("MonthlySubscriptionId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -175,9 +162,31 @@ namespace DAL.EF.APP.Migrations
 
                     b.HasIndex("SportsSchoolId");
 
-                    b.HasIndex("User_typeId");
-
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.App.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Message");
                 });
 
             modelBuilder.Entity("Domain.Competition", b =>
@@ -186,13 +195,10 @@ namespace DAL.EF.APP.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Group_size")
+                    b.Property<int>("GroupSize")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("LocationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("Location_id")
+                    b.Property<Guid>("LocationId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -201,10 +207,10 @@ namespace DAL.EF.APP.Migrations
                         .HasColumnType("character varying(128)");
 
                     b.Property<DateTime>("Since")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("Until")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -258,30 +264,6 @@ namespace DAL.EF.APP.Migrations
                     b.ToTable("Location");
                 });
 
-            modelBuilder.Entity("Domain.Message", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Message");
-                });
-
             modelBuilder.Entity("Domain.MonthlySubscription", b =>
                 {
                     b.Property<Guid>("Id")
@@ -289,7 +271,7 @@ namespace DAL.EF.APP.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -299,15 +281,12 @@ namespace DAL.EF.APP.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 
-                    b.Property<Guid?>("Sports_schoolId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("Sports_school_id")
+                    b.Property<Guid>("SportsSchoolId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Sports_schoolId");
+                    b.HasIndex("SportsSchoolId");
 
                     b.ToTable("MonthlySubscription");
                 });
@@ -328,10 +307,7 @@ namespace DAL.EF.APP.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<Guid?>("MessageId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("Message_id")
+                    b.Property<Guid>("MessageId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("PhoneNumber")
@@ -355,16 +331,10 @@ namespace DAL.EF.APP.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("ExcerciseId")
+                    b.Property<Guid>("ExcerciseId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Excercise_id")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("LocationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("Location_id")
+                    b.Property<Guid>("LocationId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -372,11 +342,14 @@ namespace DAL.EF.APP.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<Guid?>("Sports_schoolId")
+                    b.Property<DateTime>("Since")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("SportsSchoolId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Sports_school_id")
-                        .HasColumnType("uuid");
+                    b.Property<DateTime>("Until")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -384,9 +357,36 @@ namespace DAL.EF.APP.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.HasIndex("Sports_schoolId");
+                    b.HasIndex("SportsSchoolId");
 
                     b.ToTable("Training");
+                });
+
+            modelBuilder.Entity("Domain.UserAtCompetition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CompetitionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Since")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("Until")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("CompetitionId");
+
+                    b.ToTable("UserAtCompetition");
                 });
 
             modelBuilder.Entity("Domain.UserAtTraining", b =>
@@ -398,17 +398,14 @@ namespace DAL.EF.APP.Migrations
                     b.Property<Guid?>("AppUserId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("Since")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("Since")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid?>("TrainingId")
+                    b.Property<Guid>("TrainingId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Training_id")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("Until")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("Until")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -448,46 +445,21 @@ namespace DAL.EF.APP.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("Since")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("Until")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid?>("User_groupId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("User_group_id")
+                    b.Property<Guid>("UserGroupId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("User_groupId");
+                    b.HasIndex("UserGroupId");
 
                     b.ToTable("UserInGroup");
-                });
-
-            modelBuilder.Entity("Domain.UserType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
-                    b.Property<DateTime>("Since")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("Until")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -606,14 +578,9 @@ namespace DAL.EF.APP.Migrations
 
             modelBuilder.Entity("Domain.App.Identity.AppUser", b =>
                 {
-                    b.HasOne("Domain.Competition", "Competition")
-                        .WithMany("AppUser")
-                        .HasForeignKey("CompetitionId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.MonthlySubscription", "Monthly_subscription")
+                    b.HasOne("Domain.MonthlySubscription", "MonthlySubscription")
                         .WithMany("AppUsers")
-                        .HasForeignKey("Monthly_subscriptionId")
+                        .HasForeignKey("MonthlySubscriptionId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.SportsSchool", "SportsSchool")
@@ -621,18 +588,9 @@ namespace DAL.EF.APP.Migrations
                         .HasForeignKey("SportsSchoolId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Domain.UserType", "User_type")
-                        .WithMany("AppUsers")
-                        .HasForeignKey("User_typeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Competition");
-
-                    b.Navigation("Monthly_subscription");
+                    b.Navigation("MonthlySubscription");
 
                     b.Navigation("SportsSchool");
-
-                    b.Navigation("User_type");
                 });
 
             modelBuilder.Entity("Domain.Competition", b =>
@@ -640,27 +598,30 @@ namespace DAL.EF.APP.Migrations
                     b.HasOne("Domain.Location", "Location")
                         .WithMany("Competition")
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Location");
                 });
 
             modelBuilder.Entity("Domain.MonthlySubscription", b =>
                 {
-                    b.HasOne("Domain.SportsSchool", "Sports_school")
+                    b.HasOne("Domain.SportsSchool", "SportsSchool")
                         .WithMany("MonthlySubscriptions")
-                        .HasForeignKey("Sports_schoolId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SportsSchoolId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Sports_school");
+                    b.Navigation("SportsSchool");
                 });
 
             modelBuilder.Entity("Domain.SportsSchool", b =>
                 {
-                    b.HasOne("Domain.Message", "Message")
-                        .WithMany("Sports_school")
+                    b.HasOne("Domain.App.Message", "Message")
+                        .WithMany("SportsSchool")
                         .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Message");
                 });
@@ -670,36 +631,57 @@ namespace DAL.EF.APP.Migrations
                     b.HasOne("Domain.Excercise", "Excercise")
                         .WithMany("Training")
                         .HasForeignKey("ExcerciseId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.Location", "Location")
                         .WithMany("Training")
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasOne("Domain.SportsSchool", "Sports_school")
+                    b.HasOne("Domain.SportsSchool", "SportsSchool")
                         .WithMany("Training")
-                        .HasForeignKey("Sports_schoolId")
+                        .HasForeignKey("SportsSchoolId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Excercise");
 
                     b.Navigation("Location");
 
-                    b.Navigation("Sports_school");
+                    b.Navigation("SportsSchool");
+                });
+
+            modelBuilder.Entity("Domain.UserAtCompetition", b =>
+                {
+                    b.HasOne("Domain.App.Identity.AppUser", "AppUser")
+                        .WithMany("UserAtCompetition")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Competition", "Competition")
+                        .WithMany("UserAtCompetition")
+                        .HasForeignKey("CompetitionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Competition");
                 });
 
             modelBuilder.Entity("Domain.UserAtTraining", b =>
                 {
                     b.HasOne("Domain.App.Identity.AppUser", "AppUser")
-                        .WithMany("User_at_training")
+                        .WithMany("UserAtTraining")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Training", "Training")
                         .WithMany("UserAtTrainings")
                         .HasForeignKey("TrainingId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
 
@@ -709,18 +691,19 @@ namespace DAL.EF.APP.Migrations
             modelBuilder.Entity("Domain.UserInGroup", b =>
                 {
                     b.HasOne("Domain.App.Identity.AppUser", "AppUser")
-                        .WithMany("User_in_group")
+                        .WithMany()
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Domain.UserGroup", "User_group")
-                        .WithMany("User_in_group")
-                        .HasForeignKey("User_groupId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("Domain.UserGroup", "UserGroup")
+                        .WithMany("UserInGroup")
+                        .HasForeignKey("UserGroupId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
 
-                    b.Navigation("User_group");
+                    b.Navigation("UserGroup");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -778,14 +761,19 @@ namespace DAL.EF.APP.Migrations
                 {
                     b.Navigation("AppRefreshTokens");
 
-                    b.Navigation("User_at_training");
+                    b.Navigation("UserAtCompetition");
 
-                    b.Navigation("User_in_group");
+                    b.Navigation("UserAtTraining");
+                });
+
+            modelBuilder.Entity("Domain.App.Message", b =>
+                {
+                    b.Navigation("SportsSchool");
                 });
 
             modelBuilder.Entity("Domain.Competition", b =>
                 {
-                    b.Navigation("AppUser");
+                    b.Navigation("UserAtCompetition");
                 });
 
             modelBuilder.Entity("Domain.Excercise", b =>
@@ -798,11 +786,6 @@ namespace DAL.EF.APP.Migrations
                     b.Navigation("Competition");
 
                     b.Navigation("Training");
-                });
-
-            modelBuilder.Entity("Domain.Message", b =>
-                {
-                    b.Navigation("Sports_school");
                 });
 
             modelBuilder.Entity("Domain.MonthlySubscription", b =>
@@ -826,12 +809,7 @@ namespace DAL.EF.APP.Migrations
 
             modelBuilder.Entity("Domain.UserGroup", b =>
                 {
-                    b.Navigation("User_in_group");
-                });
-
-            modelBuilder.Entity("Domain.UserType", b =>
-                {
-                    b.Navigation("AppUsers");
+                    b.Navigation("UserInGroup");
                 });
 #pragma warning restore 612, 618
         }

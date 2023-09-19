@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.Base;
-using Domain.Contracts.Base;
 
-
-namespace Domain;
+namespace Domain.App;
 
 public class Message : DomainEntityId
 {
@@ -18,5 +16,5 @@ public class Message : DomainEntityId
     
     public DateTime Date { get; set; } = default!;
     
-    public ICollection<SportsSchool>? Sports_school { get; set; }
+    public ICollection<SportsSchool>? SportsSchool { get; set; }
 }

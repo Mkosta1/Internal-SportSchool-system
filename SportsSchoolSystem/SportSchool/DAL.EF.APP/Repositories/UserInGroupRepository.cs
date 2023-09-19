@@ -39,4 +39,15 @@ public class UserInGroupRepository
             .Include(t => t.AppUser)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
+
+    public async Task<UserInGroup?> RemoveAsync(Guid id, Guid userId)
+    {
+        var userInGroup = await FindAsync(id, userId);
+        return userInGroup == null ? null : Remove(userInGroup);
+    }
+
+    public async Task<bool> IsOwnedByUserAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet.AnyAsync(t => t.Id == id && t.Id == userId);
+    }
 }

@@ -3,8 +3,17 @@ using Domain;
 
 namespace DAL.Contracts.App;
 
-public interface ISportSchoolRepository : IBaseRepository<SportsSchool>
+public interface ISportSchoolRepository : IBaseRepository<SportsSchool>, ISportsSchoolRepositoryCustom<SportsSchool>
 {
-    public Task<IEnumerable<SportsSchool>> AllAsync(Guid userId);
-    public Task<SportsSchool?> FindAsync(Guid id, Guid userId);
+    
+}
+
+public interface ISportsSchoolRepositoryCustom<TEntity>
+{
+    public Task<IEnumerable<TEntity>> AllAsync(Guid userId);
+    public Task<TEntity?> FindAsync(Guid id, Guid userId);
+
+    Task<TEntity?> RemoveAsync(Guid id, Guid userId);
+    
+    Task<bool> IsOwnedByUserAsync(Guid id, Guid userId);
 }

@@ -39,4 +39,15 @@ public class SportSchoolRepository
             .Include(t => t.AppUser)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
+
+    public async Task<SportsSchool?> RemoveAsync(Guid id, Guid userId)
+    {
+        var sportsSchool = await FindAsync(id, userId);
+        return sportsSchool == null ? null : Remove(sportsSchool);
+    }
+
+    public async Task<bool> IsOwnedByUserAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet.AnyAsync(t => t.Id == id && t.Id == userId);
+    }
 }

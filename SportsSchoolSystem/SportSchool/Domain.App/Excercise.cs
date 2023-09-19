@@ -6,7 +6,7 @@ namespace Domain;
 
 public class Excercise : DomainEntityId
 {
-
+    
     [MinLength(1)]
     [MaxLength(128)]
     public string Name { get; set; } = default!;

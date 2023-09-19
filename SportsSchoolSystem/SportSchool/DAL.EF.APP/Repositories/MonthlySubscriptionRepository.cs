@@ -39,4 +39,15 @@ public class MonthlySubscriptionRepository
             .Include(t => t.AppUsers)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
+
+    public async Task<MonthlySubscription?> RemoveAsync(Guid id, Guid userId)
+    {
+        var monthlySubscription = await FindAsync(id, userId);
+        return monthlySubscription == null ? null : Remove(monthlySubscription);
+    }
+
+    public async Task<bool> IsOwnedByUserAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet.AnyAsync(t => t.Id == id && t.Id == userId);
+    }
 }

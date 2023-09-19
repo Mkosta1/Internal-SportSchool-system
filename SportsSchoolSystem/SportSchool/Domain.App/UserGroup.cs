@@ -13,5 +13,5 @@ public class UserGroup : DomainEntityId
     
     public int Size { get; set; } = default!;
     
-    public ICollection<UserInGroup>? User_in_group { get; set; }
+    public ICollection<UserInGroup>? UserInGroup { get; set; }
 }

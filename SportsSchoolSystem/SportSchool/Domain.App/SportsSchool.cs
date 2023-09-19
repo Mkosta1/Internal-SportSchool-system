@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.App;
 using Domain.App.Identity;
 using Domain.Base;
 using Domain.Contracts.Base;
@@ -27,7 +28,7 @@ public class SportsSchool : DomainEntityId
     
     public ICollection<MonthlySubscription>? MonthlySubscriptions { get; set; }
     
-    public Guid Message_id { get; set; }
+    public Guid MessageId { get; set; }
     public Message? Message { get; set; }
     
 }

@@ -16,11 +16,13 @@ using Domain.App.Identity;
 
 namespace SportSchool.Areas.Identity.Pages.Account.Manage
 {
+    /// <inheritdoc />
     public class DownloadPersonalDataModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<DownloadPersonalDataModel> _logger;
 
+        /// <inheritdoc />
         public DownloadPersonalDataModel(
             UserManager<AppUser> userManager,
             ILogger<DownloadPersonalDataModel> logger)
@@ -29,11 +31,19 @@ namespace SportSchool.Areas.Identity.Pages.Account.Manage
             _logger = logger;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnGet()
         {
             return NotFound();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);

@@ -18,12 +18,14 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace SportSchool.Areas.Identity.Pages.Account
 {
+    /// <inheritdoc />
     [AllowAnonymous]
     public class ResendEmailConfirmationModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IEmailSender _emailSender;
 
+        /// <inheritdoc />
         public ResendEmailConfirmationModel(UserManager<AppUser> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -52,10 +54,17 @@ namespace SportSchool.Areas.Identity.Pages.Account
             public string Email { get; set; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void OnGet()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

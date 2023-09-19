@@ -16,10 +16,12 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace SportSchool.Areas.Identity.Pages.Account
 {
+    /// <inheritdoc />
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
 
+        /// <inheritdoc />
         public ResetPasswordModel(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
@@ -73,6 +75,11 @@ namespace SportSchool.Areas.Identity.Pages.Account
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public IActionResult OnGet(string code = null)
         {
             if (code == null)
@@ -89,6 +96,10 @@ namespace SportSchool.Areas.Identity.Pages.Account
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

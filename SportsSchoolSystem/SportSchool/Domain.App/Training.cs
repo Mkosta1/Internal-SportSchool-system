@@ -14,15 +14,18 @@ public class Training : DomainEntityId
     
     public int Duration { get; set; } = default!;
     
+    public DateTime Since { get; set; } = default!;
+     
+    public DateTime Until { get; set; } = default!;
     public ICollection<UserAtTraining>? UserAtTrainings { get; set; }
     
-    public Guid Location_id { get; set; }
+    public Guid LocationId { get; set; }
     public Location? Location { get; set; }
     
-    public Guid Excercise_id { get; set; }
+    public Guid ExcerciseId { get; set; }
     public Excercise? Excercise { get; set; }
     
-    public Guid Sports_school_id { get; set; }
-    public SportsSchool? Sports_school { get; set; }
+    public Guid? SportsSchoolId { get; set; }
+    public SportsSchool? SportsSchool { get; set; }
 
 }

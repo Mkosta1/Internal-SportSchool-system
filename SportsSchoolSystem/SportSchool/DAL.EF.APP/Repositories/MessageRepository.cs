@@ -1,6 +1,7 @@
 ﻿using DAL.Contracts.App;
 using DAL.EF.Base;
 using Domain;
+using Domain.App;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.EF.APP.Repositories;
@@ -14,7 +15,7 @@ public class MessageRepository
     
     public override async Task<IEnumerable<Message>> AllAsync()
     {
-        return await RepositoryDbSet.Include(e => e.Sports_school)
+        return await RepositoryDbSet.Include(e => e.SportsSchool)
             .OrderBy(e => e.Date)
             .ToListAsync();
     }
@@ -32,8 +33,21 @@ public class MessageRepository
             .ToListAsync();
     }
 
-    public Task<Message?> FindAsync(Guid id, Guid userId)
+    public async Task<Message?> FindAsync(Guid id, Guid userId)
     {
-        throw new NotImplementedException();
+        return await RepositoryDbSet
+            .Include(t => t.SportsSchool)
+            .FirstOrDefaultAsync(m => m.Id == id);
+    }
+
+    public async Task<Message?> RemoveAsync(Guid id, Guid userId)
+    {
+        var message = await FindAsync(id, userId);
+        return message == null ? null : Remove(message);
+    }
+
+    public async Task<bool> IsOwnedByUserAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet.AnyAsync(t => t.Id == id && t.Id == userId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.App;
 using Domain.App.Identity;
 using Domain.Base;
 using Domain.Contracts.Base;
@@ -13,15 +14,15 @@ public class Competition : DomainEntityId
     [MaxLength(128)]
     public string Name { get; set; } = default!;
     
-    public int Group_size { get; set; } = default!;
+    public int GroupSize { get; set; } = default!;
     
     public DateTime Since { get; set; } = default!;
 
     public DateTime Until { get; set; } = default!;
 
-    public ICollection<AppUser>? AppUser { get; set; }
+    public ICollection<UserAtCompetition>? UserAtCompetition { get; set; }
     
-    public Guid Location_id { get; set; }
+    public Guid LocationId { get; set; }
     public Location? Location { get; set; }
     
 }

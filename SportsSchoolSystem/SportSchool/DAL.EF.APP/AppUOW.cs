@@ -12,7 +12,7 @@ public class AppUOW : EFBaseUOW<ApplicationDbContext>, IAppUOW
     }
 
     private ICompetitionRepository? _competitionRepository;
-    private IExerciseRepository? _exerciseRepository;
+    private IExcerciseRepository? _exerciseRepository;
     private ILocationRepository? _locationRepository;
     private IMessageRepository? _messageRepository;
     private IMonthlySubscriptionRepository? _monthlySubscriptionRepository;
@@ -21,12 +21,13 @@ public class AppUOW : EFBaseUOW<ApplicationDbContext>, IAppUOW
     private IUserAtTrainingRepository? _userAtTrainingRepository;
     private IUserInGroupRepository? _userInGroupRepository;
     private IUserGroupRepository? _userGroupRepository;
-    private IUserTypeRepository? _userTypeRepository;
+    private IUserAtCompetitionRepository? _userAtCompetitionRepository;
+
 
     public ICompetitionRepository CompetitionRepository =>
         _competitionRepository ??= new CompetitionRepository(UowDbContext);
 
-    public IExerciseRepository ExerciseRepository =>
+    public IExcerciseRepository ExcerciseRepository =>
         _exerciseRepository ??= new ExcerciseRepository(UowDbContext);
 
     public ILocationRepository LocationRepository =>
@@ -52,7 +53,8 @@ public class AppUOW : EFBaseUOW<ApplicationDbContext>, IAppUOW
 
     public IUserGroupRepository UserGroupRepository =>
         _userGroupRepository ??= new UserGroupRepository(UowDbContext);
-
-    public IUserTypeRepository UserTypeRepository =>
-        _userTypeRepository ??= new UserTypeRepository(UowDbContext);
+    
+    
+    public IUserAtCompetitionRepository UserAtCompetitionRepository =>
+        _userAtCompetitionRepository ??= new UserAtCompetitionRepository(UowDbContext);
 }

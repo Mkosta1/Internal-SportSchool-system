@@ -6,7 +6,7 @@ public interface IAppUOW : IBaseUOW
 {
     
     ICompetitionRepository CompetitionRepository { get; }
-    IExerciseRepository ExerciseRepository { get; }
+    IExcerciseRepository ExcerciseRepository { get; }
     ILocationRepository LocationRepository { get; }
     IMessageRepository MessageRepository { get; }
     IMonthlySubscriptionRepository MonthlySubscriptionRepository { get; }
@@ -15,6 +15,6 @@ public interface IAppUOW : IBaseUOW
     IUserAtTrainingRepository UserAtTrainingRepository { get; }
     IUserInGroupRepository UserInGroupRepository { get; }
     IUserGroupRepository UserGroupRepository { get; }
-    IUserTypeRepository UserTypeRepository { get; }
+    IUserAtCompetitionRepository UserAtCompetitionRepository { get; }
     
 }

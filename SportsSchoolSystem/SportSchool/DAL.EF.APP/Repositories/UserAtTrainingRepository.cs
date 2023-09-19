@@ -39,4 +39,15 @@ public class UserAtTrainingRepository
             .Include(t => t.AppUser)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
+
+    public async Task<UserAtTraining?> RemoveAsync(Guid id, Guid userId)
+    {
+        var userAtTraining = await FindAsync(id, userId);
+        return userAtTraining == null ? null : Remove(userAtTraining);
+    }
+
+    public async Task<bool> IsOwnedByUserAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet.AnyAsync(t => t.Id == id && t.Id == userId);
+    }
 }

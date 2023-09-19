@@ -37,4 +37,15 @@ public class TrainingRepository
         return await RepositoryDbSet
             .FirstOrDefaultAsync(m => m.Id == id);
     }
+
+    public async Task<Training?> RemoveAsync(Guid id, Guid userId)
+    {
+        var training = await FindAsync(id, userId);
+        return training == null ? null : Remove(training);
+    }
+
+    public async Task<bool> IsOwnedByUserAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet.AnyAsync(t => t.Id == id && t.Id == userId);
+    }
 }

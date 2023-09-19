@@ -17,7 +17,7 @@ public class CompetitionRepository
     public override async Task<IEnumerable<Competition>> AllAsync()
     {
         return await RepositoryDbSet
-            .Include(e => e.AppUser)
+            .Include(e => e.UserAtCompetition)
             .OrderBy(e => e.Name)
             .ToListAsync();
     }
@@ -38,7 +38,19 @@ public class CompetitionRepository
     public virtual async Task<Competition?> FindAsync(Guid id, Guid userId)
     {
         return await RepositoryDbSet
-            .Include(t => t.AppUser)
+            .Include(t => t.UserAtCompetition)
             .FirstOrDefaultAsync(m => m.Id == id);
+    }
+
+    public async Task<Competition?> RemoveAsync(Guid id, Guid userId)
+    {
+        var competition = await FindAsync(id, userId);
+        return competition == null ? null : Remove(competition);
+
+    }
+
+    public async Task<bool> IsOwnedByUserAsync(Guid id, Guid userId)
+    {
+        return await RepositoryDbSet.AnyAsync(t => t.Id == id && t.Id == userId);
     }
 } 

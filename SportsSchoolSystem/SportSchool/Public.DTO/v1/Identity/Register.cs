@@ -17,4 +17,5 @@ public class Register
     
     [StringLength(128, MinimumLength = 1, ErrorMessage = "Incorrect length")]
     public string LastName { get; set; } = default!;
+    
 }

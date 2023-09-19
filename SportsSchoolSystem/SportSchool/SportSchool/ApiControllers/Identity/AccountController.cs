@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Net.Mime;
 using System.Security.Claims;
+using Asp.Versioning;
 using DAL.EF.APP;
 using Domain.App.Identity;
 using Helpers.Base;
@@ -16,8 +18,10 @@ using Public.DTO.v1.v1.Identity;
 
 namespace WebApp.ApiControllers.identity;
 
+/// <inheritdoc />
 [ApiController]
-[Route("api/v1/identity/[controller]/[action]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/identity/[controller]/[action]")]
 public class AccountController : ControllerBase
 {
     private readonly SignInManager<AppUser> _signInManager;
@@ -28,6 +32,7 @@ public class AccountController : ControllerBase
     private readonly ApplicationDbContext _context;
 
 
+    /// <inheritdoc />
     public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager,
         IConfiguration configuration, ILogger<AccountController> logger, ApplicationDbContext context)
     {
@@ -37,12 +42,23 @@ public class AccountController : ControllerBase
         _logger = logger;
         _context = context;
     }
-
+    
+    /// <summary>
+    /// Register new user to the system
+    /// </summary>
+    /// <param name="registrationData">user info</param>
+    /// <param name="expiresInSeconds">optional, override default value</param>
+    /// <returns>JWTResponse with jwt and refreshtoken</returns>
+    [HttpPost]
+    [Produces(contentType: MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(JWTResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(RestApiErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<JWTResponse>> Register([FromBody] Register registrationData,
             [FromQuery]
             int expiresInSeconds)
 
     {
+        Console.WriteLine("#######here");
         if (expiresInSeconds <= 0) expiresInSeconds = int.MaxValue;
         
         // is user already registered
@@ -133,6 +149,12 @@ public class AccountController : ControllerBase
         return Ok(res);
     }
     
+    /// <summary>
+    /// Log in function with token 
+    /// </summary>
+    /// <param name="loginData"></param>
+    /// <param name="expiresInSeconds"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<ActionResult<JWTResponse>> LogIn([FromBody] Login loginData, [FromQuery] int expiresInSeconds)
     {
@@ -228,6 +250,12 @@ public class AccountController : ControllerBase
     }
 
 
+    /// <summary>
+    /// Refresh token creation 
+    /// </summary>
+    /// <param name="refreshTokenModel"></param>
+    /// <param name="expiresInSeconds"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<ActionResult> RefreshToken(
         [FromBody]
@@ -367,6 +395,11 @@ public class AccountController : ControllerBase
         return Ok(res);
     }
 
+    /// <summary>
+    /// Logout function to end the refresh token
+    /// </summary>
+    /// <param name="logout"></param>
+    /// <returns></returns>
     [Authorize]
     [HttpPost]
     public async Task<ActionResult> Logout(

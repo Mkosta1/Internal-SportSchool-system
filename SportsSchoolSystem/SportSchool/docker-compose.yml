@@ -1,6 +1,17 @@
 version: "3.9"
 
 services:
+  sportschool-app:
+    container_name: sportschool-app
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - dist-db
+    environment:
+      - ConnectionStrings:DefaultConnection=Host=sportschool-db:5432;Database=aw-train;Username=postgres;Password=postgres
+      
   dist-db:
     container_name: sportschool-db
     image: "postgres:15.2-bullseye" 

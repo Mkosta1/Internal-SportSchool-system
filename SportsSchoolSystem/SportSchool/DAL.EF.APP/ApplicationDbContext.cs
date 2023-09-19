@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.App;
 using Domain.App.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,8 @@ public class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     public DbSet<UserAtTraining> UserAtTraining { get; set; } = default!;
     public DbSet<UserGroup> UserGroup { get; set; } = default!;
     public DbSet<UserInGroup> UserInGroup { get; set; } = default!;
-    public DbSet<UserType> UserType { get; set; } = default!;
+
+    public DbSet<UserAtCompetition> UserAtCompetition { get; set; } = default!;
    
     public DbSet<AppRefreshToken> AppRefreshTokens { get; set; } = default!;
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

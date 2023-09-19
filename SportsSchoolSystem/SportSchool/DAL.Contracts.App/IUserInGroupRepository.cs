@@ -3,8 +3,17 @@ using Domain;
 
 namespace DAL.Contracts.App;
 
-public interface IUserInGroupRepository : IBaseRepository<UserInGroup>
+public interface IUserInGroupRepository : IBaseRepository<UserInGroup>, IUserInGroupRepositoryCustom<UserInGroup>
 {
-    public Task<IEnumerable<UserInGroup>> AllAsync(Guid userId);
-    public Task<UserInGroup?> FindAsync(Guid id, Guid userId); 
+    
+}
+
+public interface IUserInGroupRepositoryCustom<TEntity>
+{
+    public Task<IEnumerable<TEntity>> AllAsync(Guid userId);
+    public Task<TEntity?> FindAsync(Guid id, Guid userId);
+
+    Task<TEntity?> RemoveAsync(Guid id, Guid userId);
+    
+    Task<bool> IsOwnedByUserAsync(Guid id, Guid userId);
 }

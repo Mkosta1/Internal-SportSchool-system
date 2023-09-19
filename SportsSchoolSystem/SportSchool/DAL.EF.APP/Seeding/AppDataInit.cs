@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using System.Runtime.InteropServices.JavaScript;
+using Domain;
 using Domain.App.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,9 @@ public static class AppDataInit
 {
     
     private static Guid adminId = Guid.Parse("8dbfed7f-81f1-4307-9bf8-17e0167a95f6");
-
+    
+    private static Guid userGroupId = new Guid();
+    
     public static void MigrateDatabase(ApplicationDbContext context)
     {
         context.Database.Migrate();
@@ -47,27 +50,15 @@ public static class AppDataInit
     
     public static void SeedAppData(ApplicationDbContext context)
     {
-        
-        SeedAppDataMonthlyUserType(context);
-        
+
         context.SaveChanges();
 
     }
     
-    
-    
-    private static void SeedAppDataMonthlyUserType(ApplicationDbContext context)
-    {
-        if (context.UserType.Any()) return;
 
-        context.UserType.Add(new UserType()
-            {
-                Name = "Member",
-                Since = new DateTime(05/03/2023),
-                Until = new DateTime(05/03/2023)
-            }
-        );
-    }
+    
+    
+    
 
     
 }
